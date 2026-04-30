@@ -7,6 +7,11 @@ networks:
 volumes:
   jupyterhub-data:
     name: jupyterhub-data
+  # Volumen compartido entre todos los contenedores de usuario.
+  # El "exchange" de nbgrader: outbound (release del profesor),
+  # inbound (entregas de alumnos) y feedback.
+  nbgrader-exchange:
+    name: nbgrader-exchange
 
 services:
   jupyterhub:
@@ -31,6 +36,8 @@ services:
       USER_MEM_LIMIT: ${USER_MEM_LIMIT:-2G}
       USER_CPU_LIMIT: ${USER_CPU_LIMIT:-1.0}
       HUB_CONNECT_IP: jupyterhub
+      NBGRADER_COURSE_ID: ${NBGRADER_COURSE_ID:-curso-2026}
+      NBGRADER_TIMEZONE: ${NBGRADER_TIMEZONE:-America/Bogota}
     depends_on:
       - singleuser-builder
 

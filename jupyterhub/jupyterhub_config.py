@@ -60,11 +60,18 @@ c.DockerSpawner.remove = True
 c.DockerSpawner.notebook_dir = "/home/jovyan/work"
 c.DockerSpawner.volumes = {
     "jupyterhub-user-{username}": "/home/jovyan/work",
+    # Volumen COMPARTIDO entre todos los usuarios para nbgrader.
+    # El profesor escribe en outbound/feedback; los alumnos en inbound.
+    # Los permisos sticky-bit los gestiona nbgrader al inicializar el curso.
+    "nbgrader-exchange": "/srv/nbgrader/exchange",
 }
 
 c.DockerSpawner.environment = {
     "GRANT_SUDO": "no",
     "CHOWN_HOME": "yes",
+    # ID del curso (debe coincidir con el grupo formgrade-{course_id} de abajo)
+    "NBGRADER_COURSE_ID": os.environ.get("NBGRADER_COURSE_ID", "curso-2026"),
+    "NBGRADER_TIMEZONE": os.environ.get("NBGRADER_TIMEZONE", "America/Bogota"),
 }
 
 c.DockerSpawner.cmd = ["start-singleuser.sh"]
@@ -100,5 +107,29 @@ c.JupyterHub.load_roles = [
             "delete:servers",
         ],
         "services": ["idle-culler"],
-    }
+    },
+    # Rol que permite a nbgrader (corriendo dentro del server del usuario)
+    # consultar grupos del Hub y saber si el usuario es instructor.
+    # Se asigna al rol "user" para que TODOS los servers de usuario lo tengan.
+    {
+        "name": "user",
+        "scopes": [
+            "self",
+            "read:groups",
+            "list:groups",
+        ],
+    },
 ]
+
+# ---------------------------------------------------------------------------
+# Grupos para nbgrader
+#   Los miembros de `formgrade-<course_id>` son INSTRUCTORES del curso.
+#   Cualquier otro usuario autenticado se considera estudiante.
+#   Nombre del grupo determinado por la convención de nbgrader.
+# ---------------------------------------------------------------------------
+NBGRADER_COURSE_ID = os.environ.get("NBGRADER_COURSE_ID", "curso-2026")
+c.JupyterHub.load_groups = {
+    f"formgrade-{NBGRADER_COURSE_ID}": {
+        "users": [u.strip() for u in admin_users if u.strip()],
+    },
+}
