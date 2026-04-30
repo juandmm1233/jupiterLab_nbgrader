@@ -1,0 +1,8 @@
+.env
+*.log
+*.sqlite
+*.sqlite-journal
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db

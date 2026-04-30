@@ -1,0 +1,47 @@
+name: jupyterlab
+
+networks:
+  jupyterhub-network:
+    name: jupyterhub-network
+
+volumes:
+  jupyterhub-data:
+    name: jupyterhub-data
+
+services:
+  jupyterhub:
+    build:
+      context: ./jupyterhub
+      dockerfile: Dockerfile
+    image: jupyterhub-custom:latest
+    container_name: jupyterhub
+    restart: unless-stopped
+    networks:
+      - jupyterhub-network
+    ports:
+      - "${HUB_PORT:-8000}:8000"
+    volumes:
+      # Socket Docker: el Hub lanza/destruye contenedores de usuario
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - jupyterhub-data:/data
+    environment:
+      DOCKER_NOTEBOOK_IMAGE: jupyterlab-singleuser:latest
+      DOCKER_NETWORK_NAME: jupyterhub-network
+      JUPYTERHUB_ADMIN: ${JUPYTERHUB_ADMIN:-admin}
+      USER_MEM_LIMIT: ${USER_MEM_LIMIT:-2G}
+      USER_CPU_LIMIT: ${USER_CPU_LIMIT:-1.0}
+      HUB_CONNECT_IP: jupyterhub
+    depends_on:
+      - singleuser-builder
+
+  # "Servicio" cuya única función es construir la imagen single-user.
+  # No se queda corriendo: solo asegura que la imagen esté disponible
+  # antes de que el Hub intente lanzar contenedores de usuario.
+  singleuser-builder:
+    build:
+      context: ./singleuser
+      dockerfile: Dockerfile
+    image: jupyterlab-singleuser:latest
+    container_name: jupyterlab-singleuser-builder
+    command: ["true"]
+    restart: "no"
