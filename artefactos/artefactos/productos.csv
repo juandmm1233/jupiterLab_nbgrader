@@ -1,0 +1,17 @@
+id,nombre,descripcion,precio,categoria
+1,Laptop AI Pro 14,Portátil 14'' con GPU integrada para IA,4500,computo
+2,Mouse ergonómico,"Agarre cómodo, conexión inalámbrica",80,accesorios
+3,Tarjeta gráfica RTX,Ideal para entrenamiento ligero de modelos,3200,gpu
+4,Servidor NAS doméstico,Almacenamiento en red para backups,1500,almacenamiento
+5,Audífonos con cancelación,"Over-ear, cancelación activa de ruido",600,audio
+6,Altavoces Bluetooth,"Par estéreo, conexión inalámbrica y batería recargable",500,audio
+7,Workstation IA Titan,Estación de trabajo con doble GPU RTX 6000 Ada,18500,computo
+8,Servidor microedge AI,Servidor compacto para inferencia en borde con 128GB RAM,7200,computo
+9,Acelerador TPU USB,NPU externa USB para acelerar modelos TensorFlow Lite,950,hardware
+10,Suscripción Nube IA,Suscripción mensual a plataforma de entrenamiento distribuido,1600,servicios
+11,Kit Visión Artificial,Cámaras 4K y módulos Jetson para prototipos de visión,4300,hardware
+12,Cluster Kubernetes AI,Paquete de nodos preconfigurados para MLOps,9800,infraestructura
+13,Framework MLOps Pro,"Suite para versionado, monitoreo y despliegue de modelos",2100,software
+14,Licencia IDE Data Science,IDE con herramientas colaborativas y notebooks integrados,650,software
+15,Curso Modelos Generativos,Programa intensivo sobre técnicas SOTA en IA generativa,520,formacion
+16,Pack Datasets Curados,Conjunto de datasets anotados para entrenamiento específico,890,datasets
