@@ -1,0 +1,9 @@
+# Garantiza fines de línea LF dentro de contenedores Linux,
+# aunque el repo se clone/edite en Windows.
+* text=auto eol=lf
+
+*.sh        text eol=lf
+*.py        text eol=lf
+Dockerfile  text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
