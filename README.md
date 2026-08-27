@@ -1,5 +1,7 @@
 # JupyterLab Hub multiusuario (Docker)
 
+> **Arquitectura y requisitos educativos:** ver la guía completa en [`GUIA_ARQUITECTURA.md`](GUIA_ARQUITECTURA.md) (autenticación, aprobación manual, nbgrader y aislamiento del exchange).
+
 JupyterHub multiusuario en contenedores con:
 
 - **NativeAuthenticator**: los usuarios se registran y el admin los autoriza.
@@ -19,6 +21,7 @@ JupyterHub multiusuario en contenedores con:
 .
 ├── docker-compose.yml
 ├── .env.example
+├── GUIA_ARQUITECTURA.md        # Guía de despliegue y aislamiento (esta arquitectura)
 ├── jupyterhub/
 │   ├── Dockerfile              # Hub + NativeAuthenticator + DockerSpawner
 │   └── jupyterhub_config.py    # Configuración del Hub (incluye grupo formgrade-<curso>)
